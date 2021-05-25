@@ -20,8 +20,8 @@ namespace Modul11_UI_HW.Model
         private static OrganizationSource instance;
         private OrganizationSource()
         {
-
         }
+
         public static OrganizationSource GetInstance()
         {
             if (instance == null)
@@ -44,14 +44,14 @@ namespace Modul11_UI_HW.Model
                 InitialDirectory = Environment.CurrentDirectory,
                 RestoreDirectory = true
             };
-            if (dlg.ShowDialog() == false) return null;
+            if (dlg.ShowDialog() != true) return new ObservableCollection<Department>();
 
             var file = dlg.FileName;
 
             using StreamReader reader = File.OpenText(file);
             var fileText = reader.ReadToEnd();
-
-            return JsonConvert.DeserializeObject<ObservableCollection<Department>>(fileText);
+            var deserializeJson = JsonConvert.DeserializeObject<ObservableCollection<Department>>(fileText);
+            return deserializeJson;
         }
 
         /// <summary>

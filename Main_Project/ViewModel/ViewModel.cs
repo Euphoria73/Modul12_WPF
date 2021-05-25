@@ -3,9 +3,8 @@ using System.Collections.ObjectModel;
 using Modul11_UI_HW.Model;
 using System.Windows.Input;
 using Modul11_UI_HW.Commands;
-using Microsoft.Win32;
-using System.IO;
 using System.Windows;
+using System.IO;
 
 namespace Modul11_UI_HW.ViewModel
 {

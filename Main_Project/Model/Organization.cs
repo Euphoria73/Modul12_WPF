@@ -30,7 +30,7 @@ namespace Modul11_UI_HW.Model
         /// </summary>
         /// <param name="deps"></param>
         public void Populate(ObservableCollection<Department> deps) 
-        {
+        {           
             if (deps.Count == 0)
             {
                 deps.Add(new Department
