@@ -37,16 +37,17 @@ namespace Modul11_UI_HW.Model
         /// <returns></returns>
         public ObservableCollection<Department> OpenFromJSONFile()
         {
-            var dlg = new OpenFileDialog
-            {
-                Title = "Открыть файл",
-                Filter = "Файл json (*.json)|*.json",
-                InitialDirectory = Environment.CurrentDirectory,
-                RestoreDirectory = true
-            };
-            if (dlg.ShowDialog() != true) return new ObservableCollection<Department>();
+            var dialog = new DialogService();
+            //var dlg = new OpenFileDialog
+            //{
+            //    Title = "Открыть файл",
+            //    Filter = "Файл json (*.json)|*.json",
+            //    InitialDirectory = Environment.CurrentDirectory,
+            //    RestoreDirectory = true
+            //};
+            if (dialog.OpenFileDialog() == false) return new ObservableCollection<Department>();
 
-            var file = dlg.FileName;
+            var file = dialog.FilePath;
 
             using StreamReader reader = File.OpenText(file);
             var fileText = reader.ReadToEnd();
@@ -79,16 +80,17 @@ namespace Modul11_UI_HW.Model
 
             if (f_name == null)
             {
-                var dialog = new SaveFileDialog
-                {
-                    Title = "Сохранение файла",
-                    Filter = "Файл json (*.json)|*.json",
-                    InitialDirectory = Environment.CurrentDirectory,
-                    RestoreDirectory = true
-                };
+                var dialog = new DialogService();
+                //var dialog = new SaveFileDialog
+                //{
+                //    Title = "Сохранение файла",
+                //    Filter = "Файл json (*.json)|*.json",
+                //    InitialDirectory = Environment.CurrentDirectory,
+                //    RestoreDirectory = true
+                //};
 
-                if (dialog.ShowDialog() != true) return;
-                f_name = dialog.FileName;
+                if (dialog.SaveFileDialog() != true) return;
+                f_name = dialog.FilePath;
             }
 
             using var writer = new StreamWriter(new FileStream(f_name, FileMode.Create, FileAccess.Write));

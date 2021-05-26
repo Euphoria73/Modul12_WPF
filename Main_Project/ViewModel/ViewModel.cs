@@ -10,6 +10,7 @@ namespace Modul11_UI_HW.ViewModel
 {
     class ViewModel : ViewModelBase
     {
+
         private string _title = "";
 
         /// <summary>
@@ -34,8 +35,10 @@ namespace Modul11_UI_HW.ViewModel
         private static ObservableCollection<Department> _myOrganization = new ObservableCollection<Department>();
 
         private readonly Organization structure = Organization.GetInstance(); //использую синглтон структуры, т.к. в один момент времени мы можем работать только с одной организацией
-        
+
         private readonly OrganizationSource organizationSource = OrganizationSource.GetInstance();
+
+        private readonly DialogService dialog = new DialogService();
         /// <summary>
         /// Коллекция организации
         /// </summary>
@@ -78,7 +81,7 @@ namespace Modul11_UI_HW.ViewModel
             }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Обратитесь в службу поддержки");
+                dialog.ShowMessage("Обратитесь в службу поддержки");
             }
         }
 
@@ -114,15 +117,15 @@ namespace Modul11_UI_HW.ViewModel
                 int numAddingEmployees = 1; //TODO: можно добавить вывод текстбокса для ввода требуемого пользователем числа
                 SelectedItem.AddNewEmployee(numAddingEmployees);
                 structure.RefreshSalary(_myOrganization);
-                MessageBox.Show("Работник успешно добавлен!");
+                dialog.ShowMessage("Работник успешно добавлен!");
             }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Выберите департамент, в который хотите добавить работника");
+                dialog.ShowMessage("Выберите департамент, в который хотите добавить работника");
             }
             catch (Exception e)
             {
-                MessageBox.Show($"Ошибка: {e.Message} => {e.GetType()}, передайте информацию в отдел технической поддержки для исправления");
+                dialog.ShowMessage($"Ошибка: {e.Message} => {e.GetType()}, передайте информацию в отдел технической поддержки для исправления");
             }
         }
         #endregion     
@@ -150,11 +153,11 @@ namespace Modul11_UI_HW.ViewModel
             }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Выберите родительский департамент, в который хотите добавить новый департамент");
+                dialog.ShowMessage("Выберите родительский департамент, в который хотите добавить новый департамент");             
             }
             catch (Exception e)
             {
-                MessageBox.Show($"Ошибка: {e.Message} => {e.GetType()}, передайте информацию в отдел технической поддержки для исправления");
+                dialog.ShowMessage($"Ошибка: {e.Message} => {e.GetType()}, передайте информацию в отдел технической поддержки для исправления");
             }
         }
 
