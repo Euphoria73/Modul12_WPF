@@ -34,9 +34,9 @@ namespace Modul11_UI_HW.ViewModel
         }
         private static ObservableCollection<Department> _myOrganization = new ObservableCollection<Department>();
 
-        private readonly Organization structure = Organization.GetInstance(); //использую синглтон структуры, т.к. в один момент времени мы можем работать только с одной организацией
+        private readonly Organization structure = Organization.GetInstance; //использую lazy-синглтон структуры, т.к. в один момент времени мы можем работать только с одной организацией
 
-        private readonly OrganizationSource organizationSource = OrganizationSource.GetInstance();
+        private readonly OrganizationSource organizationSource = OrganizationSource.GetInstance;
 
         private readonly DialogService dialog = new DialogService();
         /// <summary>

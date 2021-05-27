@@ -16,19 +16,23 @@ namespace Modul11_UI_HW.Model
     }
 
     class OrganizationSource : IOrganizationSource<ObservableCollection<Department>>
-    {
-        private static OrganizationSource instance;
+    {       
         private OrganizationSource()
         {
         }
 
-        public static OrganizationSource GetInstance()
+        public static OrganizationSource GetInstance { get { return NestedOrganizationSource.instance; } }
+
+        /// <summary>
+        /// вложенный класс для предотвращения преждевременного создания экземпляра класса OrganizationSource
+        /// </summary>
+        private class NestedOrganizationSource
         {
-            if (instance == null)
-            {
-                instance = new OrganizationSource();
+            static NestedOrganizationSource()
+            { 
             }
-            return instance;
+
+            internal static readonly OrganizationSource instance = new OrganizationSource();
         }
 
         /// <summary>

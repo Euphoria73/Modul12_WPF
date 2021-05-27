@@ -7,24 +7,29 @@ using System.IO;
 
 namespace Modul11_UI_HW.Model
 { 
-    class Organization
-    {
-        private static Organization instance;
-
+    sealed class Organization
+    {      
         private Organization()
-        { }
+        {
+        }
         /// <summary>
         /// Синглтон структуры организации
         /// </summary>
         /// <returns></returns>
-        public static Organization GetInstance()
+        public static Organization GetInstance { get { return NestedOrganization.instance; } }
+
+        /// <summary>
+        /// вложенный класс для предотвращения преждевременного и неконтролируемого создания экземпляра класса Organization
+        /// </summary>
+        private class NestedOrganization
         {
-            if (instance == null)
+            static NestedOrganization()
             {
-                instance = new Organization();
             }
-            return instance;
+            internal static readonly Organization instance = new Organization();
+
         }
+
         /// <summary>
         /// Заполнение новой организации псевдослучайными данными
         /// </summary>
