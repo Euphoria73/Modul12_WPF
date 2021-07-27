@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using Microsoft.Win32;
-using Newtonsoft.Json;
-using System.IO;
+﻿using System.Collections.ObjectModel;
 
 
-namespace Modul11_UI_HW.Model
-{ 
+namespace Modul12.Project.Model
+{
     sealed class Organization
-    {      
+    {
         private Organization()
         {
         }
@@ -34,8 +30,8 @@ namespace Modul11_UI_HW.Model
         /// Заполнение новой организации псевдослучайными данными
         /// </summary>
         /// <param name="deps"></param>
-        public void Populate(ObservableCollection<Department> deps) 
-        {           
+        public void Populate(ObservableCollection<Department> deps)
+        {
             if (deps.Count == 0)
             {
                 deps.Add(new Department
@@ -44,13 +40,13 @@ namespace Modul11_UI_HW.Model
                 ));
             }
             PopulateOrganization(deps[0].Departments, "Department ", 3);
-           
+
             foreach (var item in deps)
-            {                
+            {
                 deps[0].ManagerDepartment.Salary += item.ManagerDepartment.ManagerGetSalary(item);
             }
         }
-                
+
         /// <summary>
         /// Заполнение структуры данными
         /// </summary>
@@ -58,7 +54,7 @@ namespace Modul11_UI_HW.Model
         /// <param name="nameDepartment"></param>
         /// <param name="countDivisions"></param>
         private void PopulateOrganization(ObservableCollection<Department> deps, string nameDepartment, int countDivisions)
-        {            
+        {
             if (countDivisions == 0)
             {
                 return;
@@ -68,7 +64,7 @@ namespace Modul11_UI_HW.Model
                 for (int i = 0; i < countDivisions; i++)
                 {
                     deps.Add(new Department(nameDepartment + $"{i + 1}", 2));
-                   
+
                     foreach (var item in deps)
                     {
                         item.ManagerDepartment.Salary += item.ManagerDepartment.ManagerGetSalary(item);
@@ -91,6 +87,6 @@ namespace Modul11_UI_HW.Model
             }
         }
 
-        
+
     }
 }

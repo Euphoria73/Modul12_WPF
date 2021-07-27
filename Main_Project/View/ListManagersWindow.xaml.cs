@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 
-namespace Modul11_UI_HW.View
+namespace Modul12.Project.View
 {
     /// <summary>
     /// Логика взаимодействия для ListManagersWindow.xaml

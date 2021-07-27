@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
 
-namespace Modul11_UI_HW.EventHandlers
+namespace Modul12.Project.EventHandlers
 {
     /// <summary>
     /// Двусторонняя привязка View-ModelView для раскрытия структуры
@@ -13,8 +10,8 @@ namespace Modul11_UI_HW.EventHandlers
     class BindableSelectedItemBehavior : Behavior<TreeView>
     {
         public static readonly DependencyProperty SelectedItemProperty =
-                                                                        DependencyProperty.Register("SelectedItem", typeof(object), 
-                                                                        typeof(BindableSelectedItemBehavior), 
+                                                                        DependencyProperty.Register("SelectedItem", typeof(object),
+                                                                        typeof(BindableSelectedItemBehavior),
                                                                         new UIPropertyMetadata(null, OnSelectedItemChanged));
 
         public object SelectedItem
@@ -51,5 +48,5 @@ namespace Modul11_UI_HW.EventHandlers
         {
             SelectedItem = e.NewValue;
         }
-    }    
+    }
 }

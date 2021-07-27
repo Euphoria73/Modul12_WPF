@@ -1,11 +1,7 @@
 ﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
 using System.Windows;
 
-namespace Modul11_UI_HW.Model
+namespace Modul12.Project.Model
 {
     public interface IDialogService
     {

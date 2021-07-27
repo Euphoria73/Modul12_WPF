@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
 
-namespace Modul11_UI_HW.Commands
+namespace Modul12.Project.Commands
 {
     class RelayCommand : ICommand
-    {              
+    {
         private readonly Action<object> execute;
         private readonly Func<object, bool> canExecute;
 
@@ -22,7 +20,7 @@ namespace Modul11_UI_HW.Commands
 
         public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
         {
-            this.execute = execute ?? throw new ArgumentNullException(nameof(Execute)); 
+            this.execute = execute ?? throw new ArgumentNullException(nameof(Execute));
             this.canExecute = canExecute;
         }
 
@@ -32,7 +30,7 @@ namespace Modul11_UI_HW.Commands
         /// <param name="parameter"></param>
         public void Execute(object parameter)
         {
-            this.execute(parameter);
+            execute(parameter);
         }
 
         /// <summary>
@@ -41,7 +39,7 @@ namespace Modul11_UI_HW.Commands
         /// <param name="parameter"></param>
         /// <returns></returns>
         public bool CanExecute(object parameter) => canExecute?.Invoke(parameter) ?? true; //Если не указан делегат считаем что команду можно выполнить
-                                                                                               //в любом случае
+                                                                                           //в любом случае
     }
 
 }

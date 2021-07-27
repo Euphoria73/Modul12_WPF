@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Modul11_UI_HW.ViewModel
+namespace Modul12.Project.ViewModel
 {
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
@@ -26,7 +24,7 @@ namespace Modul11_UI_HW.ViewModel
         /// <param name="value">новое значение</param>
         /// <param name="propertyName"></param>
         /// <returns></returns>
-        protected virtual bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null) 
+        protected virtual bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
             //если значение не изменилось, то PropertyChanged событие не запускает и возвращает false
             if (EqualityComparer<T>.Default.Equals(storage, value))
@@ -34,8 +32,8 @@ namespace Modul11_UI_HW.ViewModel
                 return false;
             }
             storage = value;
-            this.OnPropertyCanged(propertyName);
+            OnPropertyCanged(propertyName);
             return true;
-        }       
+        }
     }
 }

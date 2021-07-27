@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 
-namespace Modul11_UI_HW.Model
+namespace Modul12.Project.Model
 {
     class EmployeeInfo
     {

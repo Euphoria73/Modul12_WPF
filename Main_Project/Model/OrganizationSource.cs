@@ -1,13 +1,9 @@
-﻿using Microsoft.Win32;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Text;
 
-namespace Modul11_UI_HW.Model
-{   
+namespace Modul12.Project.Model
+{
     interface IOrganizationSource<T>
     {
         T OpenFromJSONFile();
@@ -16,7 +12,7 @@ namespace Modul11_UI_HW.Model
     }
 
     class OrganizationSource : IOrganizationSource<ObservableCollection<Department>>
-    {       
+    {
         private OrganizationSource()
         {
         }
@@ -29,7 +25,7 @@ namespace Modul11_UI_HW.Model
         private class NestedOrganizationSource
         {
             static NestedOrganizationSource()
-            { 
+            {
             }
 
             internal static readonly OrganizationSource instance = new OrganizationSource();

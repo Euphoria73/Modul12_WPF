@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using Modul11_UI_HW.Model;
 using System.Windows.Input;
-using Modul11_UI_HW.Commands;
-using System.Windows;
-using System.IO;
-using System.Collections.Generic;
+using Modul12.Project.Commands;
+using Modul12.Project.Model;
 
-namespace Modul11_UI_HW.ViewModel
+namespace Modul12.Project.ViewModel
 {
     class ViewModel : ViewModelBase
     {
@@ -53,7 +50,7 @@ namespace Modul11_UI_HW.ViewModel
 
             set => SetProperty(ref _myOrganization, value);
         }
-               
+
         #region Команды управления программой
 
 
@@ -102,7 +99,7 @@ namespace Modul11_UI_HW.ViewModel
                 return managers.OutputAllManagers(_myOrganization, _myOrganization[0].Departments.Count);
             }
         }
-       
+
         public ICommand GetManagersCommand { get; }
         private bool CanGetManagersCommandExecute(object path) => path is Department; //делаю проверку привязки к SelectedItem в MainWindow
 
@@ -223,7 +220,7 @@ namespace Modul11_UI_HW.ViewModel
             }
             catch (NullReferenceException)
             {
-                dialog.ShowMessage("Выберите родительский департамент, в который хотите добавить новый департамент");             
+                dialog.ShowMessage("Выберите родительский департамент, в который хотите добавить новый департамент");
             }
             catch (Exception e)
             {

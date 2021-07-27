@@ -1,7 +1,7 @@
-﻿<Application x:Class="Modul11_UI_HW.App"
+﻿<Application x:Class="Modul12.Project.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Modul11_UI_HW"
+             xmlns:local="clr-namespace:Modul12.Project"
              StartupUri="/View/MainWindow.xaml">
     <Application.Resources>
          

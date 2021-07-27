@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Modul11_UI_HW.Model
+namespace Modul12.Project.Model
 {
     public static class EmployeeGenerator
-    {       
+    {
         public static Random random = new Random();
 
         /// <summary>

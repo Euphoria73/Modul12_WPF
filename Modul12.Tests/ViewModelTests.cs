@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace Modul11_UI_HW.Tests
+namespace Modul12.Project.Tests
 {    
     public class ViewModelTests
     {

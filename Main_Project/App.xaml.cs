@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Modul11_UI_HW
+namespace Modul12.Project
 {
     /// <summary>
     /// Interaction logic for App.xaml
