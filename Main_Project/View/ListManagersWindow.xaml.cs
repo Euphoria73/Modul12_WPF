@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace Modul11_UI_HW.View
 {
     /// <summary>
-    /// Логика взаимодействия для SecondWindow.xaml
+    /// Логика взаимодействия для ListManagersWindow.xaml
     /// </summary>
-    public partial class SecondWindow : Window
+    public partial class ListManagersWindow : Window
     {
-        public SecondWindow()
+        public ListManagersWindow()
         {
             InitializeComponent();              
         }     

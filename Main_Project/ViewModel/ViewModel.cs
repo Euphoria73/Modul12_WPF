@@ -92,7 +92,7 @@ namespace Modul11_UI_HW.ViewModel
         #region Команда кнопки открытия списка руководителей
 
         /// <summary>
-        /// Привязка списка руководителей к View
+        /// Привязка списка руководителей к ListManagersWindow
         /// </summary>
         public ObservableCollection<Employee> GetManagers
         {
@@ -104,14 +104,48 @@ namespace Modul11_UI_HW.ViewModel
         }
        
         public ICommand GetManagersCommand { get; }
-        private bool CanGetManagersCommandExecute(object path) => path is Department;
+        private bool CanGetManagersCommandExecute(object path) => path is Department; //делаю проверку привязки к SelectedItem в MainWindow
 
         public void OnGetManagersCommand(object path)
         {
             try
             {
-                View.SecondWindow windowManagers = new View.SecondWindow(); //открываем окно со списком
+                View.ListManagersWindow windowManagers = new View.ListManagersWindow(); //открываем окно со списком
                 windowManagers.Title = "Список Руководителей";
+                windowManagers.ShowDialog();
+            }
+            catch (Exception e)
+            {
+
+                dialog.ShowMessage($"Ошибка {e}, Обратитесь в службу поддержки");
+            }
+        }
+
+        #endregion
+
+        #region Команда кнопки открытия списка работников
+
+        /// <summary>
+        /// Привязка списка работников к ListWorkersWindow
+        /// </summary>
+        public ObservableCollection<Employee> GetWorkers
+        {
+            get
+            {
+                EmployeeInfo workers = new EmployeeInfo();
+                return workers.OutputAllWorkers(_myOrganization, _myOrganization[0].Departments.Count);
+            }
+        }
+
+        public ICommand GetWorkersCommand { get; }
+        private bool CanGetWorkersCommandExecute(object path) => path is Department; //делаю проверку привязки к SelectedItem в MainWindow
+
+        public void OnGetWorkersCommand(object path)
+        {
+            try
+            {
+                View.ListWorkersWindow windowManagers = new View.ListWorkersWindow();
+                windowManagers.Title = "Список Работников";
                 windowManagers.ShowDialog();
             }
             catch (Exception e)
@@ -220,7 +254,7 @@ namespace Modul11_UI_HW.ViewModel
         #endregion
 
         /// <summary>
-        /// Модель представления для связи между визуальной частью и логикой программы
+        /// Модель представления для связи между визуальной частью и моделью
         /// </summary>
         public ViewModel()
         {
@@ -231,6 +265,7 @@ namespace Modul11_UI_HW.ViewModel
             AddDepartmentCommand = new RelayCommand(OnAddDepartmentCommandExecuted, CanAddDepartmentCommandExecute);
             DeleteDepartmentCommand = new RelayCommand(OnDeleteDepartmentCommandExecuted, CanDeleteDepartmentCommandExecute);
             GetManagersCommand = new RelayCommand(OnGetManagersCommand, CanGetManagersCommandExecute);
+            GetWorkersCommand = new RelayCommand(OnGetWorkersCommand, CanGetWorkersCommandExecute);
         }
 
 

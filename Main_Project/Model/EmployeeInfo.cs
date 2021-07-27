@@ -8,37 +8,51 @@ namespace Modul11_UI_HW.Model
     class EmployeeInfo
     {
         private ObservableCollection<Employee> ListEmployees = new ObservableCollection<Employee>();
-        
+
+        /// <summary>
+        /// Возвращает список всех руководителей организации
+        /// </summary>
+        /// <param name="deps">департамент организации</param>
+        /// <param name="countDivisions">количество подразделений(отделов) департамента</param>
+        /// <returns></returns>
         public ObservableCollection<Employee> OutputAllManagers(ObservableCollection<Department> deps, int countDivisions)
         {
-            for (int numDep = 0; numDep < deps.Count && numDep <= countDivisions; ++numDep)
+            for (int numberDepartment = 0; numberDepartment < deps.Count && numberDepartment <= countDivisions; ++numberDepartment)
             {
-                foreach (Department item in deps)
+                foreach (Department department in deps)
                 {
-                    if (!ListEmployees.Contains(item.ManagerDepartment))
+                    if (!ListEmployees.Contains(department.ManagerDepartment))
                     {
-                        item.ManagerDepartment.Position = item.NameDepartment;
-                        ListEmployees.Add(item.ManagerDepartment);
+                        department.ManagerDepartment.Position = department.NameDepartment;
+                        ListEmployees.Add(department.ManagerDepartment);
                     }
                 }
-                ListEmployees = OutputAllManagers(deps[numDep].Departments, countDivisions - 1); //применяю рекурсию для прохода по всему дереву организации
+                ListEmployees = OutputAllManagers(deps[numberDepartment].Departments, countDivisions - 1); //применяю рекурсию для прохода по всему дереву организации
             }
             return ListEmployees;
         }
 
+        /// <summary>
+        /// Возвращает список всех работников организации
+        /// </summary>
+        /// <param name="deps">департамент организации</param>
+        /// <param name="countDivisions">количество подразделений(отделов) департамента</param>
+        /// <returns></returns>
         public ObservableCollection<Employee> OutputAllWorkers(ObservableCollection<Department> deps, int countDivisions)
         {
-            for (int numDep = 0; numDep < deps.Count && numDep <= countDivisions; ++numDep)
+            for (int numberDepartment = 0; numberDepartment < deps.Count && numberDepartment <= countDivisions; ++numberDepartment)
             {
-                foreach (Department item in deps)
+                foreach (Department department in deps)
                 {
-                    if (!ListEmployees.Contains(item.ManagerDepartment))
+                    foreach (var worker in department.Employees)
                     {
-                        item.ManagerDepartment.Position = item.NameDepartment;
-                        ListEmployees.Add(item.ManagerDepartment);
+                        if (!ListEmployees.Contains(worker))
+                        {
+                            ListEmployees.Add(worker);
+                        }
                     }
                 }
-                ListEmployees = OutputAllManagers(deps[numDep].Departments, countDivisions - 1); //применяю рекурсию для прохода по всему дереву организации
+                ListEmployees = OutputAllWorkers(deps[numberDepartment].Departments, countDivisions - 1); //применяю рекурсию для прохода по всему дереву организации
             }
             return ListEmployees;
         }
