@@ -5,6 +5,7 @@ using System.Windows.Input;
 using Modul11_UI_HW.Commands;
 using System.Windows;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Modul11_UI_HW.ViewModel
 {
@@ -32,6 +33,7 @@ namespace Modul11_UI_HW.ViewModel
             get => selectedItem;
             set => SetProperty(ref selectedItem, value);
         }
+
         private static ObservableCollection<Department> _myOrganization = new ObservableCollection<Department>();
 
         private readonly Organization structure = Organization.GetInstance; //использую lazy-синглтон структуры, т.к. в один момент времени мы можем работать только с одной организацией
@@ -51,7 +53,7 @@ namespace Modul11_UI_HW.ViewModel
 
             set => SetProperty(ref _myOrganization, value);
         }
-
+               
         #region Команды управления программой
 
 
@@ -87,6 +89,40 @@ namespace Modul11_UI_HW.ViewModel
 
         #endregion
 
+        #region Команда кнопки открытия списка руководителей
+
+        /// <summary>
+        /// Привязка списка руководителей к View
+        /// </summary>
+        public ObservableCollection<Employee> GetManagers
+        {
+            get
+            {
+                EmployeeInfo managers = new EmployeeInfo();
+                return managers.OutputAllManagers(_myOrganization, _myOrganization[0].Departments.Count);
+            }
+        }
+       
+        public ICommand GetManagersCommand { get; }
+        private bool CanGetManagersCommandExecute(object path) => path is Department;
+
+        public void OnGetManagersCommand(object path)
+        {
+            try
+            {
+                View.SecondWindow windowManagers = new View.SecondWindow(); //открываем окно со списком
+                windowManagers.Title = "Список Руководителей";
+                windowManagers.ShowDialog();
+            }
+            catch (Exception e)
+            {
+
+                dialog.ShowMessage($"Ошибка {e}, Обратитесь в службу поддержки");
+            }
+        }
+
+        #endregion
+
         #region Команда сохранения организации в файл
         public ICommand SaveCommand { get; }
 
@@ -114,7 +150,7 @@ namespace Modul11_UI_HW.ViewModel
         {
             try
             {
-                int numAddingEmployees = 1; //TODO: можно добавить вывод текстбокса для ввода требуемого пользователем числа
+                int numAddingEmployees = 1; //по умолчанию добавляет 1 сотрудника. TODO: можно добавить вывод текстбокса для ввода требуемого пользователем числа добавляемых сотрудников
                 SelectedItem.AddNewEmployee(numAddingEmployees);
                 structure.RefreshSalary(_myOrganization);
                 dialog.ShowMessage("Работник успешно добавлен!");
@@ -194,6 +230,7 @@ namespace Modul11_UI_HW.ViewModel
             AddEmployeeCommand = new RelayCommand(OnAddEmployeeCommandExecuted, CanAddEmployeeCommandExecute);
             AddDepartmentCommand = new RelayCommand(OnAddDepartmentCommandExecuted, CanAddDepartmentCommandExecute);
             DeleteDepartmentCommand = new RelayCommand(OnDeleteDepartmentCommandExecuted, CanDeleteDepartmentCommandExecute);
+            GetManagersCommand = new RelayCommand(OnGetManagersCommand, CanGetManagersCommandExecute);
         }
 
 

@@ -40,10 +40,10 @@ namespace Modul11_UI_HW.Model
             {
                 deps.Add(new Department
                 (
-                    "Default organization", 0
+                    "Default organization", 3
                 ));
             }
-            PopulateOrganization(deps[0].Departments, "Department ", 0);
+            PopulateOrganization(deps[0].Departments, "Department ", 3);
            
             foreach (var item in deps)
             {                

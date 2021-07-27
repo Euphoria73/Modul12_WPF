@@ -180,7 +180,6 @@ namespace Modul11_UI_HW.Model
             {
                 return 1300;
             }
-
             return currentDepartment.ManagerDepartment.Salary;
         }        
     }
