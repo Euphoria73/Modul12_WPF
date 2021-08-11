@@ -30,21 +30,21 @@ namespace Modul12.Project.Model
         /// Заполнение новой организации псевдослучайными данными
         /// </summary>
         /// <param name="deps"></param>
-        public void Populate(ObservableCollection<Department> deps)
+        public void Populate(ref ObservableCollection<Department> deps)
         {
             if (deps.Count == 0)
             {
                 deps.Add(new Department
                 (
-                    "Default organization", 3
+                    "Default organization", 0
                 ));
+                PopulateOrganization(deps[0].Departments, "Department ", 0);
+                foreach (var item in deps)
+                {
+                    deps[0].ManagerDepartment.Salary += item.ManagerDepartment.ManagerGetSalary(item);
+                }
             }
-            PopulateOrganization(deps[0].Departments, "Department ", 3);
-
-            foreach (var item in deps)
-            {
-                deps[0].ManagerDepartment.Salary += item.ManagerDepartment.ManagerGetSalary(item);
-            }
+            else return;
         }
 
         /// <summary>

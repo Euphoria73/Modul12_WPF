@@ -4,12 +4,30 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon />
+    <Win32Resource />
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="View\about.png" />
+    <None Remove="View\new.png" />
+    <None Remove="View\open.png" />
+    <None Remove="View\save.png" />
+    <None Remove="View\settings.png" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Runtime.Serialization.Json" Version="4.3.0" />
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="View\about.png" />
+    <Resource Include="View\new.png" />
+    <Resource Include="View\open.png" />
+    <Resource Include="View\save.png" />
+    <Resource Include="View\settings.png" />
   </ItemGroup>
 
   <ItemGroup>

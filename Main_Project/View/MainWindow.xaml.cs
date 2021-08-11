@@ -10,6 +10,6 @@ namespace Modul12.Project
         public MainWindow()
         {
             InitializeComponent();
-        }
+        }     
     }
 }

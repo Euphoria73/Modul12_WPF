@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:Modul12.Project.Model"
         xmlns:vm="clr-namespace:Modul12.Project.ViewModel" 
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-        xmlns:treeview="clr-namespace:Modul12.Project.EventHandlers"       
+        xmlns:treeview="clr-namespace:Modul12.Project.EventHandlers"            
         mc:Ignorable="d"
-        Title="{Binding Title}" Height="450" Width="856" x:Name="_window">
+        Title="{Binding Title}" Height="450" Width="856" x:Name="_window" BorderBrush="Transparent">
     <Window.DataContext>
         <vm:ViewModel/>
     </Window.DataContext>
@@ -21,17 +21,13 @@
         </HierarchicalDataTemplate>
     </Window.Resources>
     <DockPanel>
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header ="Создать" Command ="{Binding CreateCommand}"/>
-            <MenuItem Header ="Открыть" Command ="{Binding OpenCommand}"/>
-            <MenuItem Header ="Сохранить" Command="{Binding SaveCommand}"/>
-        </Menu>
-
         <Grid Width="829">
             <Grid.RowDefinitions>
-                <RowDefinition Height="5*"/>
-                <RowDefinition Height="203*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="187*"/>
+                <RowDefinition Height="237*"/>
             </Grid.RowDefinitions>
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0*"/>
                 <ColumnDefinition Width="12*"/>
@@ -45,17 +41,58 @@
                 <ColumnDefinition Width="401*"/>
                 <ColumnDefinition Width="94*"/>
             </Grid.ColumnDefinitions>
+            <Ribbon x:Name="RibbonMenu" Grid.ColumnSpan="4" Margin="0,0,37,139" Grid.RowSpan="2" HorizontalAlignment="Right" Width="56" >
+                <Ribbon.ApplicationMenu >
+                    <RibbonApplicationMenu x:Name="File" >
+                        <RibbonApplicationMenu.SmallImageSource>
+                            <DrawingImage>
+                                <DrawingImage.Drawing>
+                                    <GlyphRunDrawing ForegroundBrush="White">
+                                        <GlyphRunDrawing.GlyphRun>
+                                            <GlyphRun
+                                            CaretStops="{x:Null}" 
+                                            ClusterMap="{x:Null}" 
+                                            IsSideways="False" 
+                                            GlyphOffsets="{x:Null}" 
+                                            GlyphIndices="41 76 79 72" 
+                                            BaselineOrigin="0,12.29"  
+                                            FontRenderingEmSize="12" 
+                                            DeviceFontName="{x:Null}" 
+                                            AdvanceWidths="5.859375 2.90625 2.90625 6.275390625">
+
+                                                <GlyphRun.GlyphTypeface>
+                                                    <GlyphTypeface FontUri="C:\WINDOWS\Fonts\SEGOEUI.TTF"/>
+                                                </GlyphRun.GlyphTypeface>
+                                            </GlyphRun>
+                                        </GlyphRunDrawing.GlyphRun>
+                                    </GlyphRunDrawing>
+                                </DrawingImage.Drawing>
+                            </DrawingImage>
+                        </RibbonApplicationMenu.SmallImageSource>
+                        <RibbonApplicationMenuItem ImageSource="/View/new.png"
+                                       Header="New" Command="{Binding CreateCommand}">
+                        </RibbonApplicationMenuItem>
+                        <RibbonApplicationMenuItem ImageSource="/View/open.png"
+                                       Header="Open..." Command="{Binding OpenCommand}"/>
+                        <RibbonApplicationSplitMenuItem ImageSource="/View/save.png"
+                                            Header="Save" Command="{Binding SaveCommand}"/>
+                        <RibbonSeparator />
+                        <RibbonApplicationMenuItem ImageSource="/View/settings.png"
+                                       Header="Settings" />
+                        <RibbonApplicationMenuItem ImageSource="/View/about.png"
+                                       Header="About" />
+                    </RibbonApplicationMenu>
+
+                </Ribbon.ApplicationMenu>
+            </Ribbon>
             <GroupBox Header="Структура организации" 
                       BorderBrush="Black"                    
-                      Margin="6,5,0,35" Grid.ColumnSpan="7" HorizontalAlignment="Left" Width="304" Grid.Column="2" Grid.Row="1">
+                      Margin="60,5,0,35" HorizontalAlignment="Left" Width="253" Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="6" Grid.RowSpan="2">
                 <TreeView x:Name="TreeView_Changed1"                                                                            
                        ItemTemplate="{StaticResource Organization}"
                         ItemsSource="{Binding GetOrganization, UpdateSourceTrigger=PropertyChanged}" 
-                          Height="310" VerticalAlignment="Bottom" 
-                          HorizontalAlignment="Right" 
-                          Width="294" Margin="0,0,-2,0" 
-                          RenderTransformOrigin="0.5,-0.01"                                      
-                        >
+                          Height="310" VerticalAlignment="Bottom" Margin="0,0,-2,0" 
+                          RenderTransformOrigin="0.5,-0.01">
                     <TreeView.ItemContainerStyle>
                         <Style TargetType="TreeViewItem">
                             <Style.Triggers>
@@ -75,7 +112,7 @@
             </GroupBox>
             <GroupBox Header="Начальник департамента" 
                       BorderBrush="Black" 
-                      Margin="57,39,10,238" Grid.Row ="1" Grid.ColumnSpan="3" Grid.Column="8"
+                      Margin="3,34,0,6" Grid.Row ="1" Grid.ColumnSpan="2" Grid.Column="9"
                       DataContext="{Binding SelectedItem.ManagerDepartment, UpdateSourceTrigger=PropertyChanged}">
                 <TextBlock HorizontalAlignment="Left" Width="427" Height="125" Grid.ColumnSpan="2" Grid.Column="9" Margin="10,0,0,0" Grid.Row="1" >    
                     <Run Text="ID = " FontWeight ="Bold"/>
@@ -99,7 +136,7 @@
             <GroupBox
                 BorderBrush="Black"
                 Header="Сотрудники департамента"          
-                Margin="57,0,10,35" Grid.Column="8" Grid.Row="1" Grid.ColumnSpan="3" Height="203" VerticalAlignment="Bottom">
+                Margin="3,0,0,35" Grid.Column="9" Grid.Row="1" Grid.ColumnSpan="2" Height="203" VerticalAlignment="Bottom" Grid.RowSpan="2">
                 <DataGrid x:Name ="EmployeesList"
                            AutoGenerateColumns="False"
                            VerticalGridLinesBrush="DarkGray"                          
@@ -126,35 +163,79 @@
             <Button Command="{Binding AddEmployeeCommand}" 
                     Content="Добавить сотрудника" 
                     Grid.Column="8" HorizontalAlignment="Right" Margin="0,0,267,10" 
-                    Grid.Row="1" Width="140" Height="20" 
+                    Grid.Row="2" Width="140" Height="20" 
                     VerticalAlignment="Bottom" 
                     CommandParameter="{Binding SelectedItem}" Grid.ColumnSpan="2"/>
             <Button Command="{Binding AddDepartmentCommand}" 
                     Content="Добавить деартамент" 
                     Grid.Column="7" HorizontalAlignment="Left" Margin="54,0,0,10" 
-                    Grid.Row="1" Width="140" Height="20"
+                    Grid.Row="2" Width="140" Height="20"
                     VerticalAlignment="Bottom" 
                      CommandParameter="{Binding SelectedItem}" Grid.ColumnSpan="2"/>
             <Button Command="{Binding DeleteDepartmentCommand}" 
                     Content="Удалить деартамент" 
                     Grid.Column="3" Margin="0,0,112,10" 
-                    Grid.Row="1" Grid.ColumnSpan="5" Height="20" 
+                    Grid.Row="2" Grid.ColumnSpan="5" Height="20" 
                     VerticalAlignment="Bottom" 
                     CommandParameter="{Binding SelectedItem}"/>
-            <TextBlock Grid.Column="9" HorizontalAlignment="Left" Margin="0,15,0,0" Text="Наименование департамента" TextWrapping="Wrap" Grid.ColumnSpan="2" Width="484" FontWeight="DemiBold" Grid.Row="1" Height="24" VerticalAlignment="Top"/>
-            <TextBox Grid.Column="9" HorizontalAlignment="Right" Margin="0,16,10,0" Text="{Binding SelectedItem.NameDepartment, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="313" Grid.ColumnSpan="2" Grid.Row="1"/>
+            <TextBlock Grid.Column="9" HorizontalAlignment="Left" Margin="2,15,0,0" Text="Наименование департамента" TextWrapping="Wrap" Grid.ColumnSpan="2" Width="484" FontWeight="DemiBold" Grid.Row="1" Height="24" VerticalAlignment="Top"/>
+            <TextBox Grid.Column="9" HorizontalAlignment="Right" Margin="0,15,0,0" Text="{Binding SelectedItem.NameDepartment, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="323" Grid.ColumnSpan="2" Grid.Row="1" Height="19"/>
             <Button Command="{Binding GetManagersCommand}"
                 Content="Список всех руководителей" 
                 Grid.Column="9" HorizontalAlignment="Left" Margin="158,0,0,10" 
-                Grid.Row="1" Width="160" Height="20" 
+                Grid.Row="2" Width="160" Height="20" 
                 VerticalAlignment="Bottom"                 
                 CommandParameter="{Binding SelectedItem}"/>
             <Button Command="{Binding GetWorkersCommand}" 
                 Content="Список всех работников" 
                 Grid.Column="9" HorizontalAlignment="Right" Margin="0,0,10,10" 
-                Grid.Row="1" Width="160" Height="20" 
+                Grid.Row="2" Width="160" Height="20" 
                 VerticalAlignment="Bottom" 
                 CommandParameter="{Binding SelectedItem}" Grid.ColumnSpan="2"/>
+            <Ribbon x:Name="RibbonMenu_Department" Grid.ColumnSpan="4" Margin="0,36,37,93" Grid.Row="1" HorizontalAlignment="Right" Width="56" >
+                <Ribbon.ApplicationMenu >
+                    <RibbonApplicationMenu x:Name="Department" >
+                        <RibbonApplicationMenu.SmallImageSource>
+                            <DrawingImage>
+                                <DrawingImage.Drawing>
+                                    <GlyphRunDrawing ForegroundBrush="White">
+                                        <GlyphRunDrawing.GlyphRun>
+                                            <GlyphRun
+                                                CaretStops="{x:Null}" 
+                                                ClusterMap="{x:Null}" 
+                                                IsSideways="False" 
+                                                GlyphOffsets="{x:Null}" 
+                                                GlyphIndices="41 76 79 72" 
+                                                BaselineOrigin="0,12.29"  
+                                                FontRenderingEmSize="12" 
+                                                DeviceFontName="{x:Null}" 
+                                                AdvanceWidths="5.859375 2.90625 2.90625 6.275390625">
+
+                                                <GlyphRun.GlyphTypeface>
+                                                    <GlyphTypeface FontUri="C:\WINDOWS\Fonts\SEGOEUI.TTF"/>
+                                                </GlyphRun.GlyphTypeface>
+                                            </GlyphRun>
+                                        </GlyphRunDrawing.GlyphRun>
+                                    </GlyphRunDrawing>
+                                </DrawingImage.Drawing>
+                            </DrawingImage>
+                        </RibbonApplicationMenu.SmallImageSource>
+                        <RibbonApplicationMenuItem ImageSource="/View/new.png"
+                            Header="Добавить департамент" CommandParameter="{Binding SelectedItem}" Command="{Binding AddDepartmentCommand}"/>
+                        <RibbonApplicationMenuItem ImageSource="/View/open.png"
+                            Header="Добавить сотрудника" CommandParameter="{Binding SelectedItem}" Command="{Binding AddEmployeeCommand}"/>
+                        <RibbonSeparator />
+                        <RibbonApplicationMenuItem ImageSource="/View/settings.png"
+                            Header="Удалить департамент" CommandParameter="{Binding SelectedItem}" Command="{Binding DeleteDepartmentCommand}"/>
+                        <RibbonSeparator />
+                        <RibbonApplicationMenuItem ImageSource="/View/about.png"
+                            Header="Список всех руководителей" CommandParameter="{Binding SelectedItem}" Command="{Binding GetManagersCommand}" />
+                        <RibbonApplicationMenuItem ImageSource="/View/about.png"
+                            Header="Список всех работников" CommandParameter="{Binding SelectedItem}" Command="{Binding GetWorkersCommand}"/>
+                    </RibbonApplicationMenu>
+
+                </Ribbon.ApplicationMenu>
+            </Ribbon>
         </Grid>
     </DockPanel>
 </Window>

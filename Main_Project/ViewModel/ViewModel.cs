@@ -62,7 +62,14 @@ namespace Modul12.Project.ViewModel
         //Создание структуры компании 
         public void OnCreateCommandExecuted(object file)
         {
-            structure.Populate(_myOrganization);
+            try
+            {               
+                structure.Populate(ref _myOrganization);
+            }
+            catch (Exception e)
+            {
+                dialog.ShowMessage($"Обратитесь в службу поддержки. Код ошибки {e.Message}");
+            }            
         }
         #endregion
 

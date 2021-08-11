@@ -18,8 +18,8 @@
             <TextBlock Text="{Binding NameDepartment}" />
         </HierarchicalDataTemplate>
     </Window.Resources>
-    <DockPanel>
 
+    <DockPanel>        
         <Grid Height="369">
             <GroupBox               
                 BorderBrush="Black"
