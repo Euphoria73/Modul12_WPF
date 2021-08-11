@@ -21,10 +21,11 @@
         </HierarchicalDataTemplate>
     </Window.Resources>
     <DockPanel>
-        <Grid Width="829">
+        <Grid Width="854">
             <Grid.RowDefinitions>
                 <RowDefinition Height="10*"/>
-                <RowDefinition Height="187*"/>
+                <RowDefinition Height="132*"/>
+                <RowDefinition Height="55*"/>
                 <RowDefinition Height="237*"/>
             </Grid.RowDefinitions>
 
@@ -41,7 +42,7 @@
                 <ColumnDefinition Width="401*"/>
                 <ColumnDefinition Width="94*"/>
             </Grid.ColumnDefinitions>
-            <Ribbon x:Name="RibbonMenu" Grid.ColumnSpan="4" Margin="0,0,37,139" Grid.RowSpan="2" HorizontalAlignment="Right" Width="56" >
+            <Ribbon x:Name="RibbonMenu" Grid.ColumnSpan="10" Margin="0,0,0,84" Grid.RowSpan="2" HorizontalAlignment="Left" Width="854" Height="58" VerticalAlignment="Bottom" Grid.Column="1" >
                 <Ribbon.ApplicationMenu >
                     <RibbonApplicationMenu x:Name="File" >
                         <RibbonApplicationMenu.SmallImageSource>
@@ -82,119 +83,12 @@
                         <RibbonApplicationMenuItem ImageSource="/View/about.png"
                                        Header="About" />
                     </RibbonApplicationMenu>
-
                 </Ribbon.ApplicationMenu>
             </Ribbon>
-            <GroupBox Header="Структура организации" 
-                      BorderBrush="Black"                    
-                      Margin="60,5,0,35" HorizontalAlignment="Left" Width="253" Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="6" Grid.RowSpan="2">
-                <TreeView x:Name="TreeView_Changed1"                                                                            
-                       ItemTemplate="{StaticResource Organization}"
-                        ItemsSource="{Binding GetOrganization, UpdateSourceTrigger=PropertyChanged}" 
-                          Height="310" VerticalAlignment="Bottom" Margin="0,0,-2,0" 
-                          RenderTransformOrigin="0.5,-0.01">
-                    <TreeView.ItemContainerStyle>
-                        <Style TargetType="TreeViewItem">
-                            <Style.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="treeview:TreeViewItemBehavior.BringIntoViewWhenSelected" Value="True" />
-                                </Trigger>
-                            </Style.Triggers>
-                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        </Style>
-                    </TreeView.ItemContainerStyle>
-                    <i:Interaction.Behaviors>
-                        <!--интерактив - привязка к выбранному элементу в дереве-->
-                        <treeview:BindableSelectedItemBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    </i:Interaction.Behaviors>
-                </TreeView>
-            </GroupBox>
-            <GroupBox Header="Начальник департамента" 
-                      BorderBrush="Black" 
-                      Margin="3,34,0,6" Grid.Row ="1" Grid.ColumnSpan="2" Grid.Column="9"
-                      DataContext="{Binding SelectedItem.ManagerDepartment, UpdateSourceTrigger=PropertyChanged}">
-                <TextBlock HorizontalAlignment="Left" Width="427" Height="125" Grid.ColumnSpan="2" Grid.Column="9" Margin="10,0,0,0" Grid.Row="1" >    
-                    <Run Text="ID = " FontWeight ="Bold"/>
-                        <Run Text="{Binding Path=ID, Mode=OneWay}"/>
-                        <LineBreak/>
-                        <Run Text="Имя = " FontWeight ="Bold"/>
-                        <Run Text="{Binding Path=FirstName, Mode=OneWay}"/>
-                        <LineBreak/>
-                        <Run Text="Фамилия = " FontWeight ="Bold"/>
-                        <Run Text="{Binding Path=LastName, Mode=OneWay}"/>
-                        <LineBreak/>
-                        <Run Text="Возраст = " FontWeight ="Bold"/>
-                        <Run Text="{Binding Path=Age, Mode=OneWay}"/>
-                        <LineBreak/>
-                        <Run Text="Зарплата = " FontWeight ="Bold"/>
-                        <Run Text="{Binding Path=Salary, Mode=OneWay}"/>
-                        <Run Text=" $ "/>
-                </TextBlock>
-            </GroupBox>
-
-            <GroupBox
-                BorderBrush="Black"
-                Header="Сотрудники департамента"          
-                Margin="3,0,0,35" Grid.Column="9" Grid.Row="1" Grid.ColumnSpan="2" Height="203" VerticalAlignment="Bottom" Grid.RowSpan="2">
-                <DataGrid x:Name ="EmployeesList"
-                           AutoGenerateColumns="False"
-                           VerticalGridLinesBrush="DarkGray"                          
-                           AlternatingRowBackground="LightGray" 
-                           ItemsSource ="{Binding SelectedItem.Employees, UpdateSourceTrigger=PropertyChanged}"
-                           Grid.Column="1" Height="180" Margin="0,0,-2,0">
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="Действие" IsReadOnly="True">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Content="Удалить" Command="Delete"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTextColumn Binding="{Binding Path = ID}" IsReadOnly="True" Header ="ID" FontWeight ="Bold" Width="30"/>
-                        <DataGridTextColumn Binding="{Binding Path = FirstName}" IsReadOnly="False" Header ="Имя" FontWeight ="Bold" Width="20*"/>
-                        <DataGridTextColumn Binding="{Binding Path = LastName}" IsReadOnly="False" Header ="Фамилия" FontWeight ="Bold" Width="20*"/>
-                        <DataGridTextColumn Binding="{Binding Path = Age}" IsReadOnly="False" Header ="Возраст" FontWeight ="Bold" Width="20*"/>
-                        <DataGridTextColumn Binding="{Binding Path = Position}" IsReadOnly="True" Header ="Должность" FontWeight ="Bold" Width="20*"/>
-                        <DataGridTextColumn Binding="{Binding Path = Salary}" IsReadOnly="False" Header ="Зарплата" FontWeight ="Bold" Width="20*"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </GroupBox>
-            <Button Command="{Binding AddEmployeeCommand}" 
-                    Content="Добавить сотрудника" 
-                    Grid.Column="8" HorizontalAlignment="Right" Margin="0,0,267,10" 
-                    Grid.Row="2" Width="140" Height="20" 
-                    VerticalAlignment="Bottom" 
-                    CommandParameter="{Binding SelectedItem}" Grid.ColumnSpan="2"/>
-            <Button Command="{Binding AddDepartmentCommand}" 
-                    Content="Добавить деартамент" 
-                    Grid.Column="7" HorizontalAlignment="Left" Margin="54,0,0,10" 
-                    Grid.Row="2" Width="140" Height="20"
-                    VerticalAlignment="Bottom" 
-                     CommandParameter="{Binding SelectedItem}" Grid.ColumnSpan="2"/>
-            <Button Command="{Binding DeleteDepartmentCommand}" 
-                    Content="Удалить деартамент" 
-                    Grid.Column="3" Margin="0,0,112,10" 
-                    Grid.Row="2" Grid.ColumnSpan="5" Height="20" 
-                    VerticalAlignment="Bottom" 
-                    CommandParameter="{Binding SelectedItem}"/>
-            <TextBlock Grid.Column="9" HorizontalAlignment="Left" Margin="2,15,0,0" Text="Наименование департамента" TextWrapping="Wrap" Grid.ColumnSpan="2" Width="484" FontWeight="DemiBold" Grid.Row="1" Height="24" VerticalAlignment="Top"/>
-            <TextBox Grid.Column="9" HorizontalAlignment="Right" Margin="0,15,0,0" Text="{Binding SelectedItem.NameDepartment, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="323" Grid.ColumnSpan="2" Grid.Row="1" Height="19"/>
-            <Button Command="{Binding GetManagersCommand}"
-                Content="Список всех руководителей" 
-                Grid.Column="9" HorizontalAlignment="Left" Margin="158,0,0,10" 
-                Grid.Row="2" Width="160" Height="20" 
-                VerticalAlignment="Bottom"                 
-                CommandParameter="{Binding SelectedItem}"/>
-            <Button Command="{Binding GetWorkersCommand}" 
-                Content="Список всех работников" 
-                Grid.Column="9" HorizontalAlignment="Right" Margin="0,0,10,10" 
-                Grid.Row="2" Width="160" Height="20" 
-                VerticalAlignment="Bottom" 
-                CommandParameter="{Binding SelectedItem}" Grid.ColumnSpan="2"/>
-            <Ribbon x:Name="RibbonMenu_Department" Grid.ColumnSpan="4" Margin="0,36,37,93" Grid.Row="1" HorizontalAlignment="Right" Width="56" >
+            
+            <Ribbon x:Name="RibbonMenu_Department" Grid.ColumnSpan="4" Margin="0,0,40,8" Grid.Row="1" HorizontalAlignment="Right" Width="56" Grid.RowSpan="2" Height="141" VerticalAlignment="Bottom" >
                 <Ribbon.ApplicationMenu >
-                    <RibbonApplicationMenu x:Name="Department" >
+                    <RibbonApplicationMenu x:Name="Department" RenderTransformOrigin="0.484,3.35" >
                         <RibbonApplicationMenu.SmallImageSource>
                             <DrawingImage>
                                 <DrawingImage.Drawing>
@@ -233,9 +127,86 @@
                         <RibbonApplicationMenuItem ImageSource="/View/about.png"
                             Header="Список всех работников" CommandParameter="{Binding SelectedItem}" Command="{Binding GetWorkersCommand}"/>
                     </RibbonApplicationMenu>
-
                 </Ribbon.ApplicationMenu>
             </Ribbon>
+            <GroupBox Header="Структура организации" 
+                      BorderBrush="Black"                    
+                      Margin="0,35,12,11" HorizontalAlignment="Right" Width="269" Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="6" Grid.RowSpan="3">
+                <TreeView x:Name="TreeView_Changed1"                                                                            
+                       ItemTemplate="{StaticResource Organization}"
+                        ItemsSource="{Binding GetOrganization, UpdateSourceTrigger=PropertyChanged}" 
+                          Height="335" VerticalAlignment="Bottom" Margin="0,0,-2,0" 
+                          RenderTransformOrigin="0.5,-0.01">
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="TreeViewItem">
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="treeview:TreeViewItemBehavior.BringIntoViewWhenSelected" Value="True" />
+                                </Trigger>
+                            </Style.Triggers>
+                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+                    <i:Interaction.Behaviors>
+                        <!--интерактив - привязка к выбранному элементу в дереве-->
+                        <treeview:BindableSelectedItemBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </i:Interaction.Behaviors>
+                </TreeView>
+            </GroupBox>
+            <GroupBox Header="Начальник департамента" 
+                      BorderBrush="Black" 
+                      Margin="3,58,0,230" Grid.Row ="1" Grid.ColumnSpan="2" Grid.Column="9"
+                      DataContext="{Binding SelectedItem.ManagerDepartment, UpdateSourceTrigger=PropertyChanged}" Grid.RowSpan="3" HorizontalAlignment="Left" Width="486">
+                <TextBlock Height="99" Grid.ColumnSpan="2" Grid.Column="9" Margin="10,0,-2,0" Grid.Row="1" >    
+                    <Run Text="ID = " FontWeight ="Bold"/>
+                        <Run Text="{Binding Path=ID, Mode=OneWay}"/>
+                        <LineBreak/>
+                        <Run Text="Имя = " FontWeight ="Bold"/>
+                        <Run Text="{Binding Path=FirstName, Mode=OneWay}"/>
+                        <LineBreak/>
+                        <Run Text="Фамилия = " FontWeight ="Bold"/>
+                        <Run Text="{Binding Path=LastName, Mode=OneWay}"/>
+                        <LineBreak/>
+                        <Run Text="Возраст = " FontWeight ="Bold"/>
+                        <Run Text="{Binding Path=Age, Mode=OneWay}"/>
+                        <LineBreak/>
+                        <Run Text="Зарплата = " FontWeight ="Bold"/>
+                        <Run Text="{Binding Path=Salary, Mode=OneWay}"/>
+                        <Run Text=" $ "/>
+                </TextBlock>
+            </GroupBox>
+
+            <GroupBox
+                BorderBrush="Black"
+                Header="Сотрудники департамента"          
+                Margin="3,0,0,11" Grid.Column="9" Grid.Row="3" Grid.ColumnSpan="2" Height="209" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="486">
+                <DataGrid x:Name ="EmployeesList"
+                           AutoGenerateColumns="False"
+                           VerticalGridLinesBrush="DarkGray"                          
+                           AlternatingRowBackground="LightGray" 
+                           ItemsSource ="{Binding SelectedItem.Employees, UpdateSourceTrigger=PropertyChanged}"
+                           Grid.Column="1" Height="185" Margin="0,0,-2,0">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Действие" IsReadOnly="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Удалить" Command="Delete"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Binding="{Binding Path = ID}" IsReadOnly="True" Header ="ID" FontWeight ="Bold" Width="30"/>
+                        <DataGridTextColumn Binding="{Binding Path = FirstName}" IsReadOnly="False" Header ="Имя" FontWeight ="Bold" Width="20*"/>
+                        <DataGridTextColumn Binding="{Binding Path = LastName}" IsReadOnly="False" Header ="Фамилия" FontWeight ="Bold" Width="20*"/>
+                        <DataGridTextColumn Binding="{Binding Path = Age}" IsReadOnly="False" Header ="Возраст" FontWeight ="Bold" Width="20*"/>
+                        <DataGridTextColumn Binding="{Binding Path = Position}" IsReadOnly="True" Header ="Должность" FontWeight ="Bold" Width="20*"/>
+                        <DataGridTextColumn Binding="{Binding Path = Salary}" IsReadOnly="False" Header ="Зарплата" FontWeight ="Bold" Width="20*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+            <TextBlock Grid.Column="9" HorizontalAlignment="Left" Margin="2,39,0,0" Text="Наименование департамента" TextWrapping="Wrap" Grid.ColumnSpan="2" Width="484" FontWeight="DemiBold" Grid.Row="1" Height="24" VerticalAlignment="Top"/>
+            <TextBox Grid.Column="9" HorizontalAlignment="Left" Margin="176,38,0,69" Text="{Binding SelectedItem.NameDepartment, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Width="313" Grid.ColumnSpan="2" Grid.Row="1"/>
+            
         </Grid>
     </DockPanel>
 </Window>
